@@ -51,8 +51,6 @@
         iv_load_policy,
         preventFullScreen_s,
         showClosedCaptions_s,
-        rel,
-        autoplay
       } = JSON.parse(UrlQueryData);
 
       function sendMessageToRN(msg) {
@@ -79,28 +77,26 @@
       var player;
       function onYouTubeIframeAPIReady() {
         player = new YT.Player(randomPlayerId, {
-          width: '100%',
-          height: '100%',
+          width: '1000',
+          height: '1000',
           videoId: videoId_s,
           playerVars: {
             end: end,
-            rel: rel_s,
+            rel: 0,
             list: list,
             color: color,
-            loop: loop_s,
+            loop: 1,
             start: start,
             playsinline: 1,
             hl: playerLang,
             playlist: playlist,
             listType: listType,
-            controls: controls_s,
+            controls: 0,
             fs: preventFullScreen_s,
             cc_lang_pref: cc_lang_pref_s,
             iv_load_policy: iv_load_policy,
             modestbranding: modestbranding_s,
             cc_load_policy: showClosedCaptions_s,
-            rel: rel,
-            autoplay: autoplay
           },
           events: {
             onReady: onPlayerReady,
@@ -150,23 +146,6 @@
       document.addEventListener('msfullscreenchange', onFullScreenChange);
       document.addEventListener('mozfullscreenchange', onFullScreenChange);
       document.addEventListener('webkitfullscreenchange', onFullScreenChange);
-
-      // Function to inject CSS into iframe
-      function injectCssIntoIframe() {
-        const iframe = document.getElementById(randomPlayerId).querySelector('iframe');
-        if (iframe) {
-          const css = '.ytp-popup { display: none; }';
-          const iframeDocument = iframe.contentDocument || iframe.contentWindow.document;
-          const style = iframeDocument.createElement('style');
-          style.type = 'text/css';
-          style.appendChild(iframeDocument.createTextNode(css));
-          iframeDocument.head.appendChild(style);
-        }
-      }
-
-      // Attempt to inject CSS after iframe is ready
-      setTimeout(injectCssIntoIframe, 3000);
-
     </script>
   </body>
 </html>
